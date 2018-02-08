@@ -36,7 +36,7 @@ def run():
     
     x, y, y_pred, loss = linear_regression()
     
-    optimizer = tf.train.GradientDescentOptimizer(0.1).minimize(loss)
+    optimizer = tf.train.GradientDescentOptimizer(0.3).minimize(loss)
     
     
     init = tf.global_variables_initializer()
@@ -44,7 +44,7 @@ def run():
     with tf.Session() as session:
         session.run(init)
         feed_dict = {x:x_batch, y: y_batch}
-        for _ in range(30):
+        for _ in range(100):
             loss_val, _ = session.run([loss, optimizer], feed_dict)
             
             print("loss mean  ", loss_val.mean())
