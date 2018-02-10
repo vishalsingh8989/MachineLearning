@@ -5,13 +5,6 @@ from __future__ import print_function
 Activation: sigmoid and softmax
 Accuracy acheived  :  97.24 %. training_steps = 100000
 
-Test result : 
- ____________________________________________________________________________________________________________________________________________________
-|     Activtion function             |  Number of layer   | Learning fxn |  Learning_rate  |  Batch_size |  Training_steps | Accuracy |   Total loss | 
-|  sigmoid and softmax               |  4                 | GDO          |  0.0005         |   100       |    100000       |  96.57   |    1559.6    | 
-|  sigmoid and softmax               |  4                 | GDO          |  0.0001         |   100       |    1000000      |          |
-
-
 """
 
 
@@ -33,44 +26,47 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 
 
-learning_rate = 0.0001
+learning_rate = 0.0002
 batch_size = 100
 pic_number = 10   # neurals count
 pic_size = 28
-training_steps = 10
-print_iter = 1
-collect_interval = 1
+training_steps = 1000000
+print_iter = 10
+collect_interval = 100
 
 
 
-layer_1 = 200
-layer_2= 100
-layer_3 = 60
-layer_4 = 30
+layer_1 = 4
+layer_2 = 8
+layer_3 = 12
+layer_4 = 200
 
 
 
 # W0 = tf.Variable(tf.truncated_normal([pic_size*pic_size, layer_0], stddev = 0.1))
 # B0 = tf.Variable(tf.zeros([layer_0]))
 
-
-W1 = tf.Variable(tf.truncated_normal([pic_size*pic_size, layer_1], stddev = 0.1))
-B1 = tf.Variable(tf.zeros([layer_1]))
+#                                      #filter size   #input channel   #output channel
+W1 = tf.Variable(tf.truncated_normal([   5,    5,      1,               layer_1], stddev = 0.1))
+B1 = tf.Variable(tf.ones([layer_1])/10)
  
  
-W2 = tf.Variable(tf.truncated_normal([layer_1, layer_2], stddev = 0.1))
-B2 = tf.Variable(tf.zeros([layer_2]))
 
 
-W3 = tf.Variable(tf.truncated_normal([layer_2, layer_3], stddev = 0.1))
-B3 = tf.Variable(tf.zeros([layer_3]))
+W2 = tf.Variable(tf.truncated_normal([ 5,    5,      layer_1,               layer_2], stddev = 0.1))
+B2 = tf.Variable(tf.ones([layer_2])/10)
 
 
-W4 = tf.Variable(tf.truncated_normal([layer_3, layer_4], stddev = 0.1))
-B4 = tf.Variable(tf.zeros([layer_4]))
+W3 = tf.Variable(tf.truncated_normal([ 4,    4,      layer_2,               layer_3], stddev = 0.1))
+B3 = tf.Variable(tf.ones([layer_3])/10)
+
+
+
+W4 = tf.Variable(tf.truncated_normal([7*7*layer_3, layer_4], stddev = 0.1))
+B4 = tf.Variable(tf.ones([layer_4])/10)
 
 W5 = tf.Variable(tf.truncated_normal([layer_4, pic_number], stddev = 0.1))
-B5 = tf.Variable(tf.zeros([pic_number]))
+B5 = tf.Variable(tf.zeros([pic_number])/10)
 
 start  =   int(time.time())
  
@@ -130,7 +126,7 @@ with tf.Session() as sess:
         batch_xs, batch_ys = mnist.train.next_batch(batch_size)
         sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
          
-        if i%collect_interval == 0:
+        if i%print_iter == 0:
             accuracy_val,loss_val = sess.run([accuracy,cross_entropy], feed_dict={x: batch_xs, y_: batch_ys})
              
             x_vals_train.append(i)
@@ -141,8 +137,11 @@ with tf.Session() as sess:
             x_vals_test.append(i)
             y_vals_test.append(accuracy_val.mean()*100) 
              
-            
-        if i%print_iter == 0:
+            #print("************************")
+            #print(dir(accuracy_val))
+            #print("************************")
+            #print(dir(loss_val))
+         
             print("Iteration :  {} , Loss : {:.5} - {:.5} Accuracy :  {:.5} - {:.5}".format(i,loss_val.min() , loss_val.max(), accuracy_val.min()*100, accuracy_val.max()*100))
                
        
@@ -165,7 +164,7 @@ linecos1 = plt.plot(x_vals_train, y_vals_train, 'r-', label='Accuracy (Train dat
 linecos2 = plt.plot(x_vals_test, y_vals_test, 'b-', label='Accuracy (Test data)')
 
 
-plt.xlabel("Training step")
+plt.xlabel("Iteration")
 plt.ylabel("Accuracy ( Percentage %)")
 
 
@@ -173,7 +172,7 @@ plt.ylim(0,100)
 x_limit = max(max(max(x_vals_train), max(x_vals_test)), 105)
 plt.xlim(0,x_limit)
 interval = x_limit/20.0
-plt.xticks(np.arange(0, x_limit, interval), rotation=20)
+plt.xticks(np.arange(0, x_limit, interval))
 plt.yticks(np.arange(0, 105, 5.0))
 
 #print(x_vals)

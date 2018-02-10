@@ -118,10 +118,9 @@ plt.yticks(np.arange(0, 105, 5.0))
 
 #print(x_vals)
 #print(y_vals)
-plt.figtext(0.20, 0.08, "TensorFlow Accuracy of batch of 100 set", horizontalalignment='right') 
-plt.figtext(0.20, 0.06, "Accuracy mean on test set  : %s percent."%(accuracy_val.mean()*100), horizontalalignment='right') 
-plt.figtext(0.20, 0.04, "Total loss:  %s"%(loss_val.mean()),horizontalalignment='right') 
-plt.figtext(0.20, 0.02, "Training steps :  %s"%(training_steps),horizontalalignment='right') 
+plt.figtext(0.28, 0.06, "Accuracy on test data set  : {:.3} percent.".format(accuracy_val.mean()*100), horizontalalignment='right') 
+plt.figtext(0.195, 0.04, "Total loss:  %s"%(loss_val.mean()),horizontalalignment='right') 
+plt.figtext(0.23, 0.02, "Number of training steps :  %s"%(training_steps),horizontalalignment='right') 
 
 
 plt.minorticks_on()
