@@ -7,9 +7,9 @@ Accuracy acheived  :  97.24 %. training_steps = 100000
 
 Test result : 
  ____________________________________________________________________________________________________________________________________________________
-|     Activtion function             |  Number of layer   | Learning fxn |  Learning_rate  |  Batch_size |  Training_steps | Accuracy |   Total loss | 
+|     Activation function             |  Number of layer   | Learning fxn |  Learning_rate  |  Batch_size |  Training_steps | Accuracy |   Total loss | 
 |  sigmoid and softmax               |  4                 | GDO          |  0.0005         |   100       |    100000       |  96.57   |    1559.6    | 
-|  sigmoid and softmax               |  4                 | GDO          |  0.0001         |   100       |    1000000      |          |
+|  sigmoid and softmax               |  4                 | GDO          |  0.0002         |   100       |    200000       |          |
 
 
 """
@@ -23,25 +23,44 @@ __version__ = "0.1"
 
 
 import os
+import csv
 import time
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import tensorflow as tf
+#import tensorflow as tf
 
+import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
+#locals
+from TestData import update_results
 
+activation_fxn = "sigmoid and softmax"
+nums_of_layer = 4
+learning_fxn = "GradientDescentOptimizer"
+dataset_type = "MNIST"
 
-learning_rate = 0.0001
+learning_rate = 0.07
 batch_size = 100
 pic_number = 10   # neurals count
 pic_size = 28
-training_steps = 10
-print_iter = 1
-collect_interval = 1
+training_steps = 20000
+print_iter = 1000
+collect_interval = 10
+
+update_test_result = True  #True if you want to updat result in ./result/test_result.csv
 
 
+
+# def update_results(dataset_type, activation_fxn,nums_of_layer,learning_fxn,learning_rate,batch_size,training_steps, accuracy, total_loss):
+#     result = dataset_type + ", " + activation_fxn + ", "  + str(nums_of_layer) + " ," + learning_fxn + ", " + str(learning_rate) + ", " + str(batch_size) + ", " + str(training_steps) + ", " + str(accuracy)[:5] + " , " + str(total_loss) + "," + str((total_loss/600000.0)*100)[:5]     
+#     with open('./results/test_results.csv', 'a') as csvfile:
+#         #datawriter = csv.writer(csvfile, delimiter=' ',quotechar='|', quoting=csv.QUOTE_MINIMAL)  
+#         #datawriter.write(result + "\n")
+#         csvfile.write(result + "\n")
+#         csvfile.close()
+            
 
 layer_1 = 200
 layer_2= 100
@@ -103,7 +122,7 @@ y_ = tf.placeholder(tf.float32, [None, pic_number])
 cross_entropy =-tf.reduce_sum(y_*tf.log(y)) # can be mean also
 train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(cross_entropy)
 
-  
+
 
 #optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 #train_step = optimizer.minimize(cross_entropy)
@@ -158,6 +177,7 @@ with tf.Session() as sess:
 
 fig = plt.figure(num=None, figsize=(16, 9), dpi=360, facecolor='w', edgecolor='k')
 
+fig.subplots_adjust(bottom=0.2)
 fig.suptitle("TensorFlow Accuracy graph for mnist.")
 
 
@@ -181,7 +201,7 @@ plt.yticks(np.arange(0, 105, 5.0))
 #plt.figtext(0.20, 0.08, "TensorFlow Accuracy of batch of 100 set", horizontalalignment='right') 
 plt.figtext(0.28, 0.06, "Accuracy on test data set  : {:.3} percent.".format(accuracy_val.mean()*100), horizontalalignment='right') 
 plt.figtext(0.195, 0.04, "Total loss:  %s"%(loss_val.mean()),horizontalalignment='right') 
-plt.figtext(0.23, 0.02, "Number of training steps :  %s"%(training_steps),horizontalalignment='right') 
+plt.figtext(0.23, 0.02, "Number of training steps :  %s , Learning rate :  %s."%(training_steps, learning_rate),horizontalalignment='right') 
 
 
 plt.minorticks_on()
@@ -194,5 +214,10 @@ file_name = "./output/tensor_accuracy_"+os.path.basename(__file__).replace(".py"
 
 print("graph saved in : ", file_name)
 plt.savefig(file_name)
+if update_test_result:
+    update_results(dataset_type, activation_fxn,nums_of_layer,learning_fxn,learning_rate,batch_size,training_steps, accuracy_val.mean()*100, loss_val.mean())
+  
+#update_results(accuracy_val.mean()*100, loss_val.max())
+
 
 

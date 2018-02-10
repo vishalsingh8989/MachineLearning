@@ -1,0 +1,9 @@
+Dataset , Activation Function, Number of layers ,Learning function, Learning rate, Batch size, Training steps, Accuracy , Total loss,Loss percent
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.04, 100, 200, 9.740 , 23130.59,3.855
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.04, 100, 20000, 98.14 , 1096.4971,0.182
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.5, 100, 200, 9.799 , nan,nan
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.05, 100, 2000, 95.19 , 1712.69,0.285
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.03, 100, 20000, 98.11 , 1013.9364,0.168
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.01, 100, 50000, 97.87 , 1161.53,0.193
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.3, 100, 20000, 10.27 , 43266.062,7.211
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.07, 100, 20000, 97.79 , 1098.3893,0.183
