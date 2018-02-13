@@ -7,3 +7,13 @@ MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.03, 100, 20000, 98.11
 MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.01, 100, 50000, 97.87 , 1161.53,0.193
 MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.3, 100, 20000, 10.27 , 43266.062,7.211
 MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.07, 100, 20000, 97.79 , 1098.3893,0.183
+MNIST, sigmoid and softmax, 4 ,GradientDescentOptimizer, 0.000100131659796, 100, 20000, 97.63 , 1110.6339,0.185
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 1e-05, 100, 20000, 93.66 , 21.589296,0.003
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 1e-05, 100, 20000, 93.86 , 20.513393,0.003
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 1.000000101e-05, 100, 20000, 96.60 , 10.603891,0.001
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 1.00000061628e-05, 100, 20000, 97.93 , 7.2463727,0.001
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 1.0000008224e-05, 100, 10000, 97.40 , 7.970933,0.001
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 0.000100001498921, 100, 30000, 97.97 , 9.462496,0.001,578
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 0.000100222459656, 100, 20000, 97.86 , 8.319761,0.001,426
+MNIST, relu and softmax with decaying learning rate, 4 ,AdamOptimizer, 0.000100222459656, 100, 20000, 97.74 , 8.91764,0.001,468
+MNIST, relu and softmax with decaying learning rate, 4 ,GradientDescentOptimizer, 0.000100222459656, 100, 20000, 97.78 , 9.185107,0.001,374
