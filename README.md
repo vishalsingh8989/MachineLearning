@@ -24,7 +24,7 @@
     1. Check output folder for accuracy value and loss value graph.
     2. Check test_result under results folder.
 
-## Expermentation:
+## Experimentation:
 ### Tuning parameters in scripts:
     learning_rate = 0.9 - 0.00000001  #The rate at which value of weights and biases are changed in each training step but it also means granularity of the chang. Larger value means faster convergence but it might not reach the exact values(or aprrox.).
     batch_size = 100  # Number of images picked by training algorithms in eac training step.
