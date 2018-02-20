@@ -19,6 +19,11 @@ __date__   = "Feb, 12, 2018"
 __organization__ = "Stony Brook Univerity, NY, USA"
 __email__ = "jasrotia.vishal@stonybrook.edu"
 __version__ = "0.1"
+__status__ = "working"
+
+
+
+
 
 
 import os
@@ -33,6 +38,7 @@ import matplotlib.animation as animation
 
 from tensorflow.examples.tutorials.mnist import input_data as mnist_data
 from testresults import update_results
+
 
 
 start = time.time()

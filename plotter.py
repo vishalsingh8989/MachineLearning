@@ -11,11 +11,13 @@ Test result :
 
 """
 
+
 __author__ = "Vishal Jasrotia"
-__date__   = "Feb, 12, 2018"
+__date__   = "Feb, 06, 2018"
 __organization__ = "Stony Brook Univerity, NY, USA"
 __email__ = "jasrotia.vishal@stonybrook.edu"
 __version__ = "0.1"
+__status__ = "library_file"
 
 
 import numpy as np

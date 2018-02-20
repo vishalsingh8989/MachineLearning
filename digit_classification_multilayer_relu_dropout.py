@@ -19,6 +19,7 @@ __date__   = "Feb, 12, 2018"
 __organization__ = "Stony Brook Univerity, NY, USA"
 __email__ = "jasrotia.vishal@stonybrook.edu"
 __version__ = "0.1"
+__status__ = "working"
 
 
 import os

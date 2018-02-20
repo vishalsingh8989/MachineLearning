@@ -11,6 +11,7 @@ __date__   = "Feb, 06, 2018"
 __organization__ = "Stony Brook Univerity, NY, USA"
 __email__ = "jasrotia.vishal@stonybrook.edu"
 __version__ = "0.1"
+__status__ = "working"
 
 
 import os
@@ -22,6 +23,9 @@ import tensorflow as tf
 
 from tensorflow.examples.tutorials.mnist import input_data
 from testresults import update_results
+from sanity import Sanity
+
+
 
 
 activation_fxn = "softmax"

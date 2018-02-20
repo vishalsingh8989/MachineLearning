@@ -9,6 +9,7 @@ __date__   = "Feb, 06, 2018"
 __organization__ = "Stony Brook Univerity, NY, USA"
 __email__ = "jasrotia.vishal@stonybrook.edu"
 __version__ = "0.1"
+__status__ == "......"
 
 import numpy as np
 import matplotlib.pyplot as plt
