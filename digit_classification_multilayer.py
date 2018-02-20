@@ -36,21 +36,23 @@ from tensorflow.examples.tutorials.mnist import input_data
 #locals
 from TestData import update_results
 
-activation_fxn = "sigmoid and softmax"
+activation_fxn = "softmax"
 nums_of_layer = 4
 learning_fxn = "GradientDescentOptimizer"
 dataset_type = "MNIST"
+dataset_name = "MNIST_data"
 
-learning_rate = 0.07
+
+learning_rate = 0.1
 batch_size = 100
 pic_number = 10   # neurals count
 pic_size = 28
-training_steps = 20000
-print_iter = 1000
-collect_interval = 10
+training_steps = 2000
+print_iter = 10
+collect_interval = 1
 
-update_test_result = True  #True if you want to updat result in ./result/test_result.csv
-
+update_test_result = False  #True if you want to updat result in ./result/test_result.csv
+plotgraph = False
 
 
 # def update_results(dataset_type, activation_fxn,nums_of_layer,learning_fxn,learning_rate,batch_size,training_steps, accuracy, total_loss):
@@ -140,6 +142,12 @@ x_vals_train = []
 y_vals_train = []
 x_vals_test = []
 y_vals_test = []
+
+
+x_loss_vals_train = []
+y_loss_vals_train = []
+x_loss_vals_test = []
+y_loss_vals_test = []
  
 #train model
 test_data = {x :mnist.test.images,y_:mnist.test.labels}
@@ -154,11 +162,16 @@ with tf.Session() as sess:
              
             x_vals_train.append(i)
             y_vals_train.append(accuracy_val.mean()*100)
+            x_loss_vals_train.append(i)
+            y_loss_vals_train.append(loss_val.min())
             
             
             accuracy_val,loss_val = sess.run([accuracy,cross_entropy], feed_dict=test_data)
             x_vals_test.append(i)
             y_vals_test.append(accuracy_val.mean()*100) 
+            
+            x_loss_vals_test.append(i)
+            y_loss_vals_test.append(loss_val.min()) 
              
             
         if i%print_iter == 0:
@@ -175,45 +188,69 @@ with tf.Session() as sess:
     print ("Model saved in file: ", save_path)
 
 
+end  = time.time()
+
+if not plotgraph:
+    exit()
+
 fig = plt.figure(num=None, figsize=(16, 9), dpi=360, facecolor='w', edgecolor='k')
 
 fig.subplots_adjust(bottom=0.2)
-fig.suptitle("TensorFlow Accuracy graph for mnist.")
+#fig.suptitle("TensorFlow Accuracy graph for mnist.")
 
-
-linecos1 = plt.plot(x_vals_train, y_vals_train, 'r-', label='Accuracy (Train data)')
-linecos2 = plt.plot(x_vals_test, y_vals_test, 'b-', label='Accuracy (Test data)')
-
-
+### start first plot
+plt.subplot(2,1,1)
+linecos1 = plt.plot(x_vals_train, y_vals_train, 'b-', label='Accuracy (Train data)')
+linecos2 = plt.plot(x_vals_test, y_vals_test, 'g-', label='Accuracy (Test data)')
 plt.xlabel("Training step")
 plt.ylabel("Accuracy ( Percentage %)")
-
-
 plt.ylim(0,100)
 x_limit = max(max(max(x_vals_train), max(x_vals_test)), 105)
 plt.xlim(0,x_limit)
 interval = x_limit/20.0
 plt.xticks(np.arange(0, x_limit, interval), rotation=20)
-plt.yticks(np.arange(0, 105, 5.0))
+plt.yticks(np.arange(0, 105, 5.0)) 
+#plt.minorticks_on()
+plt.legend()
+plt.grid()
+
+
+### start second plot
+plt.subplot(2,1,2)
+linecos1 = plt.plot(x_loss_vals_train, y_loss_vals_train, 'b-', label='Loss (Train data)')
+linecos2 = plt.plot(x_loss_vals_test, y_loss_vals_test, 'g-', label='Loss (Test data)')
+plt.xlabel("Training step")
+plt.ylabel("Loss ")
+x_limit = max(max(max(x_loss_vals_train), max(x_loss_vals_test)), 105)
+plt.xlim(0,x_limit)
+interval = x_limit/20.0
+plt.xticks(np.arange(0, x_limit, interval), rotation=20)
+plt.yticks(np.arange(0, max(y_loss_vals_train), max(y_loss_vals_train)/10.0))
+#plt.minorticks_on()
+plt.legend() 
+plt.grid()
+
+### stop second plot
 
 #print(x_vals)
 #print(y_vals)
-#plt.figtext(0.20, 0.08, "TensorFlow Accuracy of batch of 100 set", horizontalalignment='right') 
-plt.figtext(0.28, 0.06, "Accuracy on test data set  : {:.3} percent.".format(accuracy_val.mean()*100), horizontalalignment='right') 
-plt.figtext(0.195, 0.04, "Total loss:  %s"%(loss_val.mean()),horizontalalignment='right') 
-plt.figtext(0.23, 0.02, "Number of training steps :  %s , Learning rate :  %s."%(training_steps, learning_rate),horizontalalignment='right') 
+plt.figtext(0.10, 010, "Total time taken : %s seconds."%(int(end-start)), horizontalalignment='left') 
+plt.figtext(0.10, 0.08, "Optimizer  : {}.".format(learning_fxn), horizontalalignment='left') 
+plt.figtext(0.10, 0.06, "Accuracy on test data set  : {:.5} percent.".format(accuracy_val.mean()*100), horizontalalignment='left') 
+plt.figtext(0.10, 0.04, "Total loss:  %s."%(loss_val.mean()),horizontalalignment='left') 
+plt.figtext(0.10, 0.02, "Number of training steps :  %s, Learning rate :  %s."%(training_steps, learning_rate),horizontalalignment='left') 
 
 
-plt.minorticks_on()
-plt.legend()
-
-plt.grid()
-#plt.show()
 stamp = "_".join(time.asctime().split())
 file_name = "./output/tensor_accuracy_"+os.path.basename(__file__).replace(".py" , "_")+dataset_name+"_"+stamp+".png"
 
+end = time.time()
+
 print("graph saved in : ", file_name)
+print("Time taken : ", int(end - start))
 plt.savefig(file_name)
+print("Done")
+
 if update_test_result:
     update_results(dataset_type, activation_fxn,nums_of_layer,learning_fxn,learning_rate,batch_size,training_steps, accuracy_val.mean()*100, loss_val.mean())
   

@@ -45,18 +45,18 @@ dataset_name = "MNIST_data"
 
 
 
-max_learning_rate = 0.005
+max_learning_rate = 0.003
 min_learning_rate = 0.00001
 decay_speed = 2000.0
 learning_rate = 0.0005
 batch_size = 100
 pic_number = 10   # neurals count
 pic_size = 28
-training_steps = 2000
+training_steps = 3000
 print_iter = 100
 collect_interval = 10
 
-update_test_result = False
+update_test_result = True
 
 # Download images and labels into mnist.test (10K images+labels) and mnist.train (60K images+labels)
 mnist = mnist_data.read_data_sets("data", one_hot=True, reshape=False, validation_size=0)
@@ -172,16 +172,13 @@ with tf.Session() as sess:
 end = time.time()
 
 
+
 fig = plt.figure(num=None, figsize=(16, 9), dpi=360, facecolor='w', edgecolor='k')
-
-
-
-
-
 
 fig.subplots_adjust(bottom=0.2)
 #fig.suptitle("TensorFlow Accuracy graph for mnist.")
 
+### start first plot
 plt.subplot(2,1,1)
 linecos1 = plt.plot(x_vals_train, y_vals_train, 'b-', label='Accuracy (Train data)')
 linecos2 = plt.plot(x_vals_test, y_vals_test, 'g-', label='Accuracy (Test data)')
@@ -219,7 +216,7 @@ plt.grid()
 #print(y_vals)
 plt.figtext(0.10, 010, "Total time taken : %s seconds."%(int(end-start)), horizontalalignment='left') 
 plt.figtext(0.10, 0.08, "Optimizer  : {}.".format(learning_fxn), horizontalalignment='left') 
-plt.figtext(0.10, 0.06, "Accuracy on test data set  : {:.3} percent.".format(accuracy_val.mean()*100), horizontalalignment='left') 
+plt.figtext(0.10, 0.06, "Accuracy on test data set  : {:.5} percent.".format(accuracy_val.mean()*100), horizontalalignment='left') 
 plt.figtext(0.10, 0.04, "Total loss:  %s."%(loss_val.mean()),horizontalalignment='left') 
 plt.figtext(0.10, 0.02, "Number of training steps :  %s, Learning rate :  %s."%(training_steps, learning_rate),horizontalalignment='left') 
 
